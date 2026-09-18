@@ -1,6 +1,4 @@
-# 生成随机数
 import random
-
 from .rational import Rational
 from .expression import Num, Op
 
@@ -9,32 +7,37 @@ def rand_operand(r):
     随机生成一个操作数，所有数值都<r
     :return：一个Rational对象，表示随机生成的操作数
     """
+    randint = random.randint
+
     # 范围太小，返回0
     if r <= 1:
         return Rational(0, 1)
 
-    # 随机选择类型：0表示自然数，1表示真分数，2表示带分数
-    kind = random.randint(0, 2)
+    # 如果 r <= 2，无法生成真分数和带分数（分母范围不够），必须强制只能生成自然数 (kind = 0)
+    if r <= 2:
+        kind = 0
+    else:
+        kind = randint(0, 2)
 
     if kind == 0:
         # 自然数：随机生成0到r-1之间的整数
-        return Rational(random.randint(0, r - 1), 1)
+        return Rational(randint(0, r - 1), 1)
 
     if kind == 1:
         # 真分数
         # 分母
-        d = random.randint(2, r - 1)
+        d = randint(2, r - 1)
         # 分子
-        a = random.randint(1, d - 1)
+        a = randint(1, d - 1)
         return Rational(a, d)
 
     # 带分数
     # 分母
-    d = random.randint(2, r - 1)
+    d = randint(2, r - 1)
     # 分子
-    a = random.randint(1, d - 1)
+    a = randint(1, d - 1)
     # 整数部分
-    k = random.randint(1, r - 1)
+    k = randint(1, r - 1)
     return Rational(k * d + a, d)
 
 
@@ -44,12 +47,15 @@ def _build(r, num_ops):
     :param r：取值范围
     :param num_ops：当前子树需要的运算符个数
     """
+    randint = random.randint
+    choice = random.choice
+
     # 递归终止条件
     if num_ops == 0:
         return Num(rand_operand(r))
 
     # 随机分配左右子树的运算符数量
-    left_ops = random.randint(0, num_ops - 1)
+    left_ops = randint(0, num_ops - 1)
     right_ops = num_ops - 1 - left_ops
 
     # 递归构建左子树
@@ -81,7 +87,7 @@ def _build(r, num_ops):
             valid_ops.append('÷')
 
     # 从合法运算符中随机选择一个
-    op = random.choice(valid_ops)
+    op = choice(valid_ops)
     # 组合成运算符节点并返回
     return Op(op, left, right)
 

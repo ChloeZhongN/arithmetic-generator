@@ -11,9 +11,9 @@ def print_help():
     print(
     """
     用法：
-    Myapp.py -n <题目数量> -r <数值范围>
+    main.py -n <题目数量> -r <数值范围>
       生成题目并保存到Exercises.txt和Answers.txt
-    Myapp.py -e <题目文件> -a <答案文件>
+    main.py -e <题目文件> -a <答案文件>
       批改答案，结果保存到Grade.txt
 
     参数：
@@ -24,8 +24,8 @@ def print_help():
       -h  显示帮助信息
 
     示例：
-      Myapp.py -n 10 -r 10
-      Myapp.py -e Exercises.txt -a Answers.txt
+      main.py -n 10 -r 10
+      main.py -e Exercises.txt -a Answers.txt
     """)
 
 
