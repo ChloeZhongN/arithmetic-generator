@@ -154,11 +154,12 @@ def save_problems(problems,
                   ex_file='Exercises.txt',
                   ans_file='Answers.txt'):
     """
-    将题目和答案写入文件
+    将题目和答案写入文件（新增行号 1. 2. …）
     """
     # 同时打开两个文件，分别用于写题目和答案
     with open(ex_file, 'w', encoding='utf-8') as fe, \
          open(ans_file, 'w', encoding='utf-8') as fa:
-        for p in problems:
-            fe.write(p.to_string() + ' = \n')
-            fa.write(str(p.eval()) + '\n')
+        for idx, p in enumerate(problems, start=1):
+            fe.write(f"{idx}. {p.to_string()} = \n")
+            fa.write(f"{idx}. {str(p.eval())}\n")
+

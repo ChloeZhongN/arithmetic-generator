@@ -1,3 +1,4 @@
+import re
 # 解析题目字符串
 from .parser import Parser
 # 解析答案字符串
@@ -38,6 +39,10 @@ def grade(ex_file, ans_file, out_file='Grade.txt'):
         # 取出这一行的题目和答案
         ex_str = ex_lines[i].strip()
         ans_str = ans_lines[i].strip()
+
+        # 新增：移除行开头 "1. " 这类序号，兼容带序号输出的文件
+        ex_str = re.sub(r'^\d+\.\s*', '', ex_str)
+        ans_str = re.sub(r'^\d+\.\s*', '', ans_str)
 
         # 去掉题目末尾的=
         if ex_str.endswith('='):
